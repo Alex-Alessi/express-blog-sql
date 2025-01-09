@@ -42,7 +42,7 @@ function show(req, res) {
 
     let post = results[0];
 
-    pizza = { ...post, image: "/images/posts/" + post.image };
+    post = { ...post, image: "/images/posts/" + post.image };
 
     res.json(post);
   });
@@ -140,6 +140,23 @@ function modify(req, res) {
 // # destroy
 function destroy(req, res) {
   const id = parseInt(req.params.id);
+
+  const sql = "DELETE FROM `posts` WHERE `id`=?";
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Database query failed" });
+    }
+
+    const sqlSelect = "SELECT * FROM `posts`";
+    connection.query(sqlSelect, (err, results) => {
+      if (err) {
+        console.log(err);
+        return res.status(500).json({ error: "Database query failed" });
+      }
+      res.json(results);
+    });
+  });
 
   // const post = postsData.find((post) => post.id === id);
 
