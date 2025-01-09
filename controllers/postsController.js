@@ -4,6 +4,12 @@ const connection = require("../db/connection");
 function index(req, res) {
   const { tag, titolo } = req.query;
 
+  const sql = "SELECT * from `blog`";
+  connection.query(sql, (err, results) => {
+    console.log(results);
+    res.json(results);
+  });
+
   // let filteredPosts = [...postsData];
 
   // if (tag) {

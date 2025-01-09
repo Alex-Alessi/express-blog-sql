@@ -6,6 +6,7 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT;
 const host = process.env.HOST;
+const frontendUrl = process.env.FRONTEND_URL;
 
 //* REGISTERING MIDDLEWARES
 const manageErrors = require("./middlewares/manageErrors.js");
