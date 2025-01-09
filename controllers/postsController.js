@@ -4,13 +4,7 @@ const connection = require("../db/connection");
 function index(req, res) {
   const { tag, titolo } = req.query;
 
-  const sql = "SELECT * from `blog`";
-  connection.query(sql, (err, results) => {
-    console.log(results);
-    res.json(results);
-  });
-
-  // let filteredPosts = [...postsData];
+  let sql = "SELECT * from `posts`";
 
   // if (tag) {
   //   filteredPosts = filteredPosts.filter((post) => post.tags.includes(tag));
@@ -22,9 +16,9 @@ function index(req, res) {
   //   );
   // }
 
-  // filteredPosts = filteredPosts.map((post) => ({ ...post, img: post.img }));
-
-  // res.json(filteredPosts);
+  connection.query(sql, (err, results) => {
+    res.json(results);
+  });
 }
 
 // # show
