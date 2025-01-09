@@ -17,6 +17,10 @@ function index(req, res) {
   // }
 
   connection.query(sql, (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Database query failed" });
+    }
     res.json(results);
   });
 }
@@ -24,17 +28,24 @@ function index(req, res) {
 // # show
 function show(req, res) {
   const id = parseInt(req.params.id);
-  // let post = postsData.find((post) => post.id === id);
 
-  // if (!post) {
-  //   const err = new Error("Id pizza not found");
-  //   err.code = 404;
-  //   throw err;
-  // }
+  const sql = "SELECT * FROM `posts` WHERE `id` = ?";
+  connection.query(sql, [id], (err, results) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Database query failed" });
+    }
 
-  // post = { ...post, img: post.img };
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Id post not found" });
+    }
 
-  // res.json(post);
+    let post = results[0];
+
+    pizza = { ...post, image: "/images/posts/" + post.image };
+
+    res.json(post);
+  });
 }
 
 // # store
